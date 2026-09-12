@@ -17,7 +17,7 @@ class IsAuthorOrReadOnly(permissions.BasePermission):
         пользователей. Методы изменения данных (PUT, PATCH, DELETE)
         разрешены только автору объекта.
         """
-        if request.method in permissions.SAFE_METHODS:
-            return True
-
-        return obj.author == request.user
+        return (
+            request.method in permissions.SAFE_METHODS
+            or obj.author == request.user
+        )
